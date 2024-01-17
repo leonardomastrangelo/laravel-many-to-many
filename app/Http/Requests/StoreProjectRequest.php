@@ -29,6 +29,7 @@ class StoreProjectRequest extends FormRequest
             'github' => ['required', 'url', 'unique:projects', 'min:4', 'max:255'],
             'description' => ['nullable'],
             'status' => ['nullable'],
+            'technologies' => ['exists:technologies,id'],
         ];
     }
     public function messages(): array
@@ -47,6 +48,7 @@ class StoreProjectRequest extends FormRequest
             'github.unique' => 'The github link has already been taken.',
             'github.min' => 'The github field must be at least :min characters.',
             'github.max' => 'The github field must be at least :max characters.',
+            'technologies.exists' => 'The technologies field is invalid.',
         ];
     }
 }

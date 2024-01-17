@@ -30,6 +30,7 @@ class UpdateProjectRequest extends FormRequest
             'github' => ['required', 'url', Rule::unique('projects')->ignore($this->project), 'min:4', 'max:255'],
             'status' => ['nullable'],
             'description' => ['nullable'],
+            'technologies' => ['exists:technologies,id'],
         ];
     }
     public function messages(): array
@@ -47,6 +48,7 @@ class UpdateProjectRequest extends FormRequest
             'github.unique' => 'The github link has already been taken.',
             'github.min' => 'The github field must be at least :min characters.',
             'github.max' => 'The github field must be at least :max characters.',
+            'technologies.exists' => 'The technologies field is invalid.',
         ];
     }
 }

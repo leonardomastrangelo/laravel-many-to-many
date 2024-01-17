@@ -51,6 +51,21 @@
             @error('category_id')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
+            <div class="form-group w-25 d-flex flex-wrap">
+                <label class="m-auto pb-2" for="logo">Technologies</label>
+                @foreach ($technologies as $technology)
+                <div class="form-check w-50 @error('technologies') is invalid @enderror">
+                    <input type="checkbox" class="form-check-input" name="technologies[]" value="{{$technology->id}}" 
+                    {{in_array($technology->id, old('technologies',[])) ? 'checked' : ''}}>
+                    <div for="technologies[]" class="form-check-label fs-5">
+                        {{$technology->name}}
+                    </div>
+                </div>
+                @endforeach
+            </div>
+            @error('technologies')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
             <div class="form-group w-50">
                 <label for="image">Image</label>
                 <div class="rectangle">

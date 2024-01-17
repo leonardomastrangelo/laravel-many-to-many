@@ -62,7 +62,22 @@
                 </div>
                 <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image">
             </div>
-            @error('logo')
+            @error('image')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+            <div class="form-group w-25 d-flex flex-wrap">
+                <label class="m-auto pb-2" for="logo">Technologies</label>
+                @foreach ($technologies as $technology)
+                <div class="form-check w-50 @error('technologies') is invalid @enderror">
+                    <input type="checkbox" class="form-check-input" name="technologies[]" value="{{$technology->id}}" 
+                    {{$project->technologies->contains($technology->id) ? 'checked' : ''}}>
+                    <div class="form-check-label fs-5">
+                        {{$technology->name}}
+                    </div>
+                </div>
+                @endforeach
+            </div>
+            @error('technologies')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
             <div class="form-group">

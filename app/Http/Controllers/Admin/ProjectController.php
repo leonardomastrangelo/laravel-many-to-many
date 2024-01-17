@@ -9,6 +9,7 @@ use App\Models\Project;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Category;
+use App\Models\Technology;
 
 class ProjectController extends Controller
 {
@@ -27,7 +28,8 @@ class ProjectController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('admin.projects.create', compact('categories'));
+        $technologies = Technology::all();
+        return view('admin.projects.create', compact('categories', 'technologies'));
     }
 
     /**
@@ -49,6 +51,10 @@ class ProjectController extends Controller
         }
         // Creazione di un nuovo progetto
         $newProject = Project::create($formData);
+        // se la richiesta ha la chiave technologies allora attacca al progetto la tecnologia
+        if ($request->has('technologies')) {
+            $newProject->technologies()->attach($request->technologies);
+        }
         // Reindirizzamento alla pagina di visualizzazione del progetto con il nuovo ID del progetto
         return redirect()->route('admin.projects.show', $newProject->slug);
     }
@@ -69,7 +75,8 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $categories = Category::all();
-        return view('admin.projects.edit', compact('project', 'categories'));
+        $technologies = Technology::all();
+        return view('admin.projects.edit', compact('project', 'categories', 'technologies'));
     }
 
     /**
@@ -95,7 +102,14 @@ class ProjectController extends Controller
             $formData['image'] = $path;
         }
 
-        $project->fill($formData)->save();
+        $project->update($formData);
+
+        if ($request->has('technologies')) {
+            $project->technologies()->sync($request->technologies);
+        } else {
+            $project->technologies()->detach();
+        }
+
 
         return redirect()->route('admin.projects.show', $project->slug);
     }
@@ -109,6 +123,7 @@ class ProjectController extends Controller
         if ($project->image) {
             Storage::delete('uploads/' . $project->image);
         }
+        $project->technologies()->detach();
         $project->delete();
         return to_route('admin.projects.index')->with('success', "Project '$project->title' has been deleted successfully");
     }

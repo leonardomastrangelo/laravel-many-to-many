@@ -6,6 +6,28 @@
             <img src="{{ asset('storage/uploads/' . $project->image) }}" alt="{{$project->title}}">
         </div>
 
+        <div class="text-center py-4">
+            <h2 class="fs-1 text-uppercase">
+                Category
+            </h2>
+            <a href="{{route('admin.categories.show', $project->category->slug)}}" class="btn badge text-bg-primary">
+                {{($project->category) ? $project->category->name : 'Uncategorized'}}
+            </a>
+        </div>
+
+        <div class="text-center pt-4 w-50 mx-auto">
+            <h2 class="fs-1 text-uppercase">
+                Technologies
+            </h2>
+            @forelse ($project->technologies as $technology)
+            <a href="{{route('admin.technologies.show', $technology->slug)}}" class="btn badge rounded-pill text-bg-success">
+                {{ $technology->name }}
+            </a>
+            @empty
+            <p>No Technologies</p>
+            @endforelse
+        </div>
+
         <div class="py-5 container text-center">
             <h2 class="fs-1 text-uppercase">Description</h2>
             <p>{{$project->description}}</p>
