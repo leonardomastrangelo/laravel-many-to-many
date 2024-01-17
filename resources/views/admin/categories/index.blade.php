@@ -9,6 +9,34 @@
             </div>
         @endif
         
+        <div>
+            <button class="btn btn-primary mb-4" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+            Create new Category
+            </button>
+        </div>
+
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">New Category</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <form action="{{route('admin.categories.store')}}" method="POST">
+                @csrf
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" required maxlength="200" minlength="3" value="{{old('name')}}">
+                </div>
+                @error('name')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+                <button class="btn btn-primary" type="submit">Submit</button>
+                <button type="reset" class="btn btn-secondary">Reset</button>
+            </form>
+        </div>
+        </div>
+
+
         {{-- PROJECTS' TABLE --}}
         <table class="table">
             <thead>
@@ -34,9 +62,6 @@
                     <td> {{-- OPERATIONS --}}
                         <a class="btn btn-info" href="{{route('admin.categories.show', $category->slug)}}">
                             <i class="fa-solid fa-eye"></i>
-                        </a>
-                        <a class="btn btn-warning" href="{{route('admin.categories.edit', $category->slug)}}">
-                            <i class="fa-solid fa-pen-to-square"></i>
                         </a>
                         <form action="{{route('admin.categories.destroy', $category->slug)}}" method="POST">
                             @csrf

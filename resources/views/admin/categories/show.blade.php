@@ -5,7 +5,8 @@
 
         <div class="text-center mb-5">
             <h2 class="fs-1 text-uppercase">Operations</h2>
-            <a class="btn btn-primary" href="{{route('admin.categories.edit', $category->slug)}}">Edit</a>
+            <div>
+        </div>
             <form class="d-inline-block" action="{{route('admin.categories.destroy', $category->slug)}}" method="POST">
                 @csrf
                 @method('DELETE')
@@ -87,7 +88,7 @@
                     </td>
                 </tr>
                 @empty
-                <h3 class="text-center fw-bold display-4">No records founded</h3>
+                <h3 class="text-center fw-bold display-4 py-4">No records founded</h3>
                 @endforelse
             </tbody>
             </table>

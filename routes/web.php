@@ -25,8 +25,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::middleware(['auth', 'verified'])->name('admin.')->prefix('admin')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('projects', ProjectController::class)->parameters(['projects' => 'project:slug']);
-    Route::resource('categories', CategoryController::class)->parameters(['categories' => 'category:slug']);
-    Route::resource('technologies', TechnologyController::class)->parameters(['technologies' => 'technology:slug']);
+    Route::resource('categories', CategoryController::class)->parameters(['categories' => 'category:slug'])->except(['edit', 'create', 'update']);
+    Route::resource('technologies', TechnologyController::class)->parameters(['technologies' => 'technology:slug'])->except(['edit', 'create', 'update']);
 });
 
 

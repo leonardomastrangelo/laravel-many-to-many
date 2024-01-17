@@ -20,20 +20,12 @@ class TechnologyController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreTechnologyRequest $request)
     {
         $formData = $request->validated();
-        $slug = Technology::getSlug($formData->name);
+        $slug = Technology::getSlug($formData['name']);
         $formData['slug'] = $slug;
         $newTechnology = Technology::create($formData);
         return redirect()->route('admin.technologies.show', $newTechnology->slug);
@@ -45,26 +37,6 @@ class TechnologyController extends Controller
     public function show(Technology $technology)
     {
         return view('admin.technologies.show', compact('technology'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Technology $technology)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateTechnologyRequest $request, Technology $technology)
-    {
-        $formData = $request->validated();
-        $slug = Technology::getSlug($formData->name);
-        $formData['slug'] = $slug;
-        $technology->fill($formData)->save();
-        return redirect()->route('admin.technologies.show', $technology->slug);
     }
 
     /**

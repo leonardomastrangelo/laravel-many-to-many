@@ -5,7 +5,6 @@
 
         <div class="text-center mb-5">
             <h2 class="fs-1 text-uppercase">Operations</h2>
-            <a class="btn btn-primary" href="{{route('admin.technologies.edit', $technology->slug)}}">Edit</a>
             <form class="d-inline-block" action="{{route('admin.technologies.destroy', $technology->slug)}}" method="POST">
                 @csrf
                 @method('DELETE')
@@ -32,7 +31,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                @forelse ($technology->projects as $project)
+                @forelse($technology->projects as $project)
                 <tr>
                     <th scope="row">
                         <div class="logo-container">
@@ -69,9 +68,6 @@
                         <a class="btn btn-info" href="{{route('admin.projects.show', $project->slug)}}">
                             <i class="fa-solid fa-eye"></i>
                         </a>
-                        <a class="btn btn-warning" href="{{route('admin.projects.edit', $project->slug)}}">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                        </a>
                         <form action="{{route('admin.projects.destroy', $project->slug)}}" method="POST">
                             @csrf
                             @method('DELETE')
@@ -84,10 +80,9 @@
                     </td>
                 </tr>
                 @empty
-                    <h3 class="text-center fw-bold display-4">No records founded</h3>
+                <h3 class="text-center fw-bold display-4 py-4">No records founded</h3>
                 @endforelse
                 </tbody>
             </table>
-            <h3 class="text-center fw-bold display-4">No records founded</h3>
     </section>
 @endsection
