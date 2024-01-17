@@ -82,8 +82,6 @@ class ProjectController extends Controller
         $slug = Project::getSlug($formData['title']);
         // Aggiunta dello slug ai dati del form
         $formData['slug'] = $slug;
-        // Aggiunta dell'ID dell'utente ai dati del form
-        $formData['user_id'] = $project->user_id;
 
         if ($request->hasFile('image')) {
             // Eliminazione dell'immagine precedente

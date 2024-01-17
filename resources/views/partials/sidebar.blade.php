@@ -38,6 +38,12 @@
                     <span>Categories</span>
                 </a>
             </li>
+            <li>
+                <a href="{{route('admin.technologies.index')}}">
+                   <i class="fa-solid fa-microchip"></i>
+                    <span>Technologies</span>
+                </a>
+            </li>
         </ul>
     </div>
 
