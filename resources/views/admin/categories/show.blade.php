@@ -21,13 +21,13 @@
         <h4 class="display-3 text-center ">
             Projects 
         </h4>
-        @forelse ($category->projects as $project)
             <table class="table">
                 <thead>
                 <tr>
                     <th scope="col">Logo</th>
                     <th scope="col">Category</th>
                     <th scope="col">Title</th>
+                    <th scope="col">Technologies</th>
                     <th scope="col">Github</th>
                     <th scope="col">Description</th>
                     <th scope="col">Status</th>
@@ -35,6 +35,7 @@
                 </tr>
             </thead>
             <tbody>
+                @forelse ($category->projects as $project)
                 <tr>
                     <th scope="row">
                         <div class="logo-container">
@@ -43,8 +44,27 @@
                             alt="{{$project->title}}">
                         </div>
                     </th>
-                    <td>{{($project->category) ? $project->category->name : 'Uncategorized'}}</td>
+                    <td>
+                        @if ($project->category)
+                            <a class="btn badge text-bg-primary" href="{{route('admin.categories.show', $project->category->slug)}}">
+                                {{$project->category->name}}
+                            </a>
+                           @else 
+                           <span class="text-muted">No category</span>
+                        @endif
+                    </td>
                     <td>{{$project->title}}</td>
+                    <td>
+                        @if ($project->technologies()->count() > 0)
+                            @foreach ($project->technologies as $technology)
+                            <a class="btn badge rounded-pill text-bg-success" href="{{route('admin.technologies.show', $technology->slug)}}">
+                                {{$technology->name}}
+                            </a>
+                            @endforeach
+                        @else 
+                            <span class="text-black">No technologies</span>
+                        @endif
+                    </td>
                     <td>{{$project->github}}</td>
                     <td class="desc">{{substr($project->description, 0, 350) . '...' }}</td>
                     <td>{{$project->status == 0 ? 'In Progress' : 'Completed'}}</td>
@@ -66,10 +86,11 @@
                         </form>
                     </td>
                 </tr>
+                @empty
+                <h3 class="text-center fw-bold display-4">No records founded</h3>
+                @endforelse
             </tbody>
             </table>
-        @empty
-            <h3 class="text-center fw-bold display-4">No records founded</h3>
-        @endforelse
+        
     </section>
 @endsection
