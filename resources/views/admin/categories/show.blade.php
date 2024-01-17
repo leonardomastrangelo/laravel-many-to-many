@@ -3,11 +3,6 @@
     <section id="projects-show">
         <h1 class="display-1">{{$category->name}}</h1>
 
-        <div class="py-5 container text-center">
-            <h2 class="fs-1 text-uppercase">Slug</h2>
-            <p>{{$category->slug}}</p>
-        </div>
-
         <div class="text-center mb-5">
             <h2 class="fs-1 text-uppercase">Operations</h2>
             <a class="btn btn-primary" href="{{route('admin.categories.edit', $category->slug)}}">Edit</a>
@@ -23,6 +18,9 @@
             </form>
         </div>
         
+        <h4 class="display-3 text-center ">
+            Projects 
+        </h4>
         @forelse ($category->projects as $project)
             <table class="table">
                 <thead>

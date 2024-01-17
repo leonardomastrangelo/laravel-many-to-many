@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('projects', function (Blueprint $table) {
-            $table->foreign('category_id')->references('id')->on('categories')->cascadeOnDelete();
+            $table->foreign('category_id')->references('id')->on('categories')->nullOnDelete();
         });
     }
 
